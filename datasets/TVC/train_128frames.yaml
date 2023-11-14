@@ -1,0 +1,4 @@
+img: frame_tsv/train_128frames_img_size256.img.tsv
+label: train.label.tsv
+caption: train.caption.tsv
+caption_linelist: train.caption.linelist.tsv

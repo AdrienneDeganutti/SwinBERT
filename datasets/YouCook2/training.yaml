@@ -1,0 +1,4 @@
+img: training.img.tsv
+label: training.label.tsv
+caption: training.caption.tsv
+caption_linelist: training.caption.linelist.tsv

@@ -1,0 +1,4 @@
+img: frame_tsv/test_value_128frames_img_size256.img.tsv
+label: test_value.label.tsv
+caption: test_value.caption.tsv
+caption_coco_format: test_value.caption_coco_format.json

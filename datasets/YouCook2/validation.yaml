@@ -1,0 +1,4 @@
+img: validation.img.tsv
+label: validation.label.tsv
+caption: validation.caption.tsv
+caption_linelist: validation.caption.linelist.tsv

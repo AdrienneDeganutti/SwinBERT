@@ -1,0 +1,4 @@
+img: frame_tsv/public_test_32frames.img.tsv
+label: public_test.label.tsv
+caption: public_test.caption.tsv
+caption_coco_format: public_test.caption_coco_format.json

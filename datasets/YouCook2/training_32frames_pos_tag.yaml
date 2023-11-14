@@ -1,0 +1,4 @@
+img: frame_tsv/training_32frames.img.tsv
+label: training.label.tsv
+caption: caption_w_pos_tag/training.caption.tsv
+caption_linelist: training.caption.linelist.tsv

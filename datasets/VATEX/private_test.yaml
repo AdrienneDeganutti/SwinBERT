@@ -1,0 +1,4 @@
+img: private_test.img.tsv
+label: private_test.label.tsv
+caption: private_test.caption.tsv
+caption_coco_format: private_test.caption_coco_format.json

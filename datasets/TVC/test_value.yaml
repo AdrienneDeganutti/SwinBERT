@@ -1,0 +1,4 @@
+img: test_value.img.tsv
+label: test_value.label.tsv
+caption: test_value.caption.tsv
+caption_linelist: test_value.caption.linelist.tsv
