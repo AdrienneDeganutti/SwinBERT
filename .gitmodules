@@ -1,0 +1,3 @@
+[submodule "src/evalcap/cider"]
+	path = src/evalcap/cider
+	url = https://github.com/xiaoweihu/cider.git
