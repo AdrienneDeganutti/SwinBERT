@@ -1,3 +1,6 @@
 [submodule "src/evalcap/cider"]
 	path = src/evalcap/cider
 	url = https://github.com/xiaoweihu/cider.git
+[submodule "src/evalcap/coco_caption"]
+	path = src/evalcap/coco_caption
+	url = https://github.com/LuoweiZhou/coco-caption.git
