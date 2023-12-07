@@ -16,8 +16,8 @@ from collections import defaultdict
 data_vid_id = "datasets/TVC/raw_videos/{}/{}_clips/{}/{}.mp4"
 
 # path to TVC repo and its annotations 
-TVC_caption_anns = '/raid/keli/dataset/TVCaption/data/tvc_{}_release.jsonl'
-TVC_subtitle_anns = '/raid/keli/dataset/TVCaption/data/tvqa_preprocessed_subtitles.jsonl'
+TVC_caption_anns = '/dataset/TVCaption/tvc_{}_release.jsonl'
+TVC_subtitle_anns = '/datasets/tvqa_preprocessed_subtitles.jsonl'
 
 # data_path: path to raw video files
 data_path = "./datasets/TVC/{}/" 

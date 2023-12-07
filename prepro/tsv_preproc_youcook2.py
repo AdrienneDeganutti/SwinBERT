@@ -13,10 +13,10 @@ from src.utils.tsv_file_ops import generate_linelist_file
 from collections import defaultdict
 
 # data path to raw video files
-data_vid_id = "datasets/YouCook2/raw_videos/{}/{}"
+data_vid_id = "/mnt/welles/scratch/datasets/YouCook2/YouCookII/raw_videos/{}/{}"
 dataset_path = './datasets/YouCook2/'
 # annotations downloaded from official downstream dataset
-Youcook2_anns = './datasets/YouCook2/youcookii_annotations_trainval.json'
+Youcook2_anns = '/mnt/welles/scratch/datasets/YouCook2/YouCookII/annotations/youcookii_annotations_trainval.json'
 Youcook2_subtitle = './datasets/YouCook2/yc2_subtitles.jsonl'
 
 # To generate tsv files:
