@@ -1,0 +1,5 @@
+caption: training.caption.tsv
+caption_coco_format: training.caption_coco_format.json
+caption_linelist: training.caption.linelist.tsv
+img: training.img.tsv
+label: training.label.tsv
