@@ -1,22 +1,5 @@
 # SwinBERT
 
- <img src="docs/swinbert-overview.png" width="650"> 
-
-This is our research code for CVPR 2022 paper: [SwinBERT: End-to-End Transformers with Sparse Attention for Video Captioning](https://arxiv.org/abs/2111.13196). 
-
-We present SwinBERT, an end-to-end transformer-based model for video captioning. SwinBERT takes video frame patches directly as inputs, and outputs a natural language description. In this repository, we provide our research code for training and testing SwinBERT for video captioning.
-
-## News
-  - 05/05/2022: Init release
-
-## Released items
-- [x] Training and evaluation code
-- [x] Inference code
-- [x] Models and training logs
-- [x] TSV dataset annotations
-- [ ] Tutorial for Frame-based TSV generation
-
-
 ## Table of contents
 * [Model Card](#Model-Card)
 * [Requirements](#Requirements)
@@ -57,17 +40,6 @@ We present SwinBERT, an end-to-end transformer-based model for video captioning.
 | YouCook2 | [URL](https://datarelease.blob.core.windows.net/swinbert/models/youcook2-32frm.zip) | 104.8 | N/A | 97.69 |
 
 * Note: All results are based on single model. No CIDEr optimization used in our experiments.
-
-## Requirements 
-We provide a [Docker image](https://hub.docker.com/r/linjieli222/videocap_torch1.7/tags) for easier reproduction. Please install the following:
-  - [nvidia driver](https://docs.nvidia.com/cuda/cuda-installation-guide-linux/index.html#package-manager-installation) (418+), 
-  - [Docker](https://docs.docker.com/install/linux/docker-ce/ubuntu/) (19.03+), 
-  - [nvidia-container-toolkit](https://github.com/NVIDIA/nvidia-docker#quickstart).
-
-We only support Linux with NVIDIA GPUs. We test on Ubuntu 18.04 and V100 cards.
-We use mixed-precision training hence GPUs with Tensor Cores are recommended.
-Our scripts require the user to have the [docker group membership](https://docs.docker.com/install/linux/linux-postinstall/)
-so that docker commands can be run without sudo.
 
 ## Download
 
@@ -248,26 +220,6 @@ so that docker commands can be run without sudo.
 
     ```
 
-
-## Before Running Code: Launch Docker Container 
-
-We provide a [Docker image](https://hub.docker.com/r/linjieli222/videocap_torch1.7/tags) for easier reproduction. Please launch the docker container before running our codes. 
-
-```bash
-export REPO_DIR=$PWD
-DATASETS=$REPO_DIR'/datasets/'
-MODELS=$REPO_DIR'/models/'
-OUTPUT_DIR=$REPO_DIR'/output/'
-source launch_container.sh $DATASETS $MODELS $OUTPUT_DIR
-```
-
-Our latest docker image `linjieli222/videocap_torch1.7:fairscale` supports the following mixed precision training
-- [x] Torch.amp (with limited GPU memory optimization, deprecated from this codebase)
-- [x] Nvidia Apex O2
-- [x] deepspeed (Best setting on VATEX, deepspeed fp16 with zero_opt_stage=1)
-- [x] fairscale
-
-
 ## Quick Demo
 We provide a demo to run end-to-end inference on the test video.
 
@@ -335,14 +287,14 @@ For offline decoding, please use  `MSRVTT-v2/val_128frames.yaml`
 # Assume in the docker container 
 EVAL_DIR='./models/table1/youcook2/best-checkpoint/'
 CUDA_VISIBLE_DEVICES=0 python src/tasks/run_caption_VidSwinBert.py \
-       --val_yaml YouCook2/testing_128frames.yaml  \
+       --val_yaml YouCook2/validation/validation_128frames.yaml  \
        --do_eval true \
        --do_train false \
        --eval_model_dir $EVAL_DIR
 ```
 
-For online decoding, please use `YouCook2/testing.yaml`
-For offline decoding, please use  `YouCook2/testing_128frames.yaml`
+For online decoding, please use `YouCook2/validation.yaml`
+For offline decoding, please use  `YouCook2/validation_128frames.yaml`
 
 ### MSVD
 
@@ -431,8 +383,8 @@ python src/tasks/run_caption_VidSwinBert.py
 # Assume in the docker container 
 python src/tasks/run_caption_VidSwinBert.py
         --config src/configs/VidSwinBert/youcook2_8frm_default.json
-        --train_yaml YouCook2/training_128frames.yaml
-        --val_yaml YouCook2/validation_128frames.yaml
+        --train_yaml YouCook2/training/training_128frames.yaml
+        --val_yaml YouCook2/validation/validation_128frames.yaml
         --per_gpu_train_batch_size 6
         --per_gpu_eval_batch_size 6
         --num_train_epochs 40
@@ -518,14 +470,6 @@ Our research code is released under MIT license.
 
 ## Contributing
 
-This project welcomes contributions and suggestions.  Most contributions require you to agree to a
-Contributor License Agreement (CLA) declaring that you have the right to, and actually do, grant us
-the rights to use your contribution. For details, visit https://cla.opensource.microsoft.com.
-
-When you submit a pull request, a CLA bot will automatically determine whether you need to provide
-a CLA and decorate the PR appropriately (e.g., status check, comment). Simply follow the instructions
-provided by the bot. You will only need to do this once across all repos using our CLA.
-
 This project has adopted the [Microsoft Open Source Code of Conduct](https://opensource.microsoft.com/codeofconduct/).
 For more information see the [Code of Conduct FAQ](https://opensource.microsoft.com/codeofconduct/faq/) or
 contact [opencode@microsoft.com](mailto:opencode@microsoft.com) with any additional questions or comments.
@@ -537,33 +481,5 @@ trademarks or logos is subject to and must follow
 [Microsoft's Trademark & Brand Guidelines](https://www.microsoft.com/en-us/legal/intellectualproperty/trademarks/usage/general).
 Use of Microsoft trademarks or logos in modified versions of this project must not cause confusion or imply Microsoft sponsorship.
 Any use of third-party trademarks or logos are subject to those third-party's policies.
-
-
-## Acknowledgments
-
-We thank Jianfeng Wang, Xiaowei Hu, Lin Liang, Zhengyuan Yang, Ehsan Azarnasab, 
-Yue Cao, Lei Ji, Huaishao Luo and Ze Liu for their helpful discussions.
-
-We also thank the anonymous reviewers for their constructive feedback.
-
-Our code is built on top of open-source GitHub repositories. 
-We thank all the authors who made their code public, which tremendously accelerates our project progress. 
-If you find these works helpful, please consider citing them as well.
-
-[huggingface/transformers](https://github.com/huggingface/transformers) 
-
-[jayleicn/ClipBERT](https://github.com/jayleicn/ClipBERT) 
-
-[linjieli222/HERO](https://github.com/linjieli222/HERO)
-
-[Microsoft/Oscar&VinVL](https://github.com/microsoft/Oscar) 
-
-[Microsoft/DeepSpeed](https://github.com/microsoft/DeepSpeed)
-
-[Nvidia/Apex](https://github.com/NVIDIA/apex)
-
-[FAIR/SlowFast](https://github.com/facebookresearch/SlowFast) 
-
-[FAIR/FairScale](https://github.com/facebookresearch/fairscale)
 
 
