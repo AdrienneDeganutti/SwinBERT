@@ -1,0 +1,5 @@
+caption: validation.caption.tsv
+caption_coco_format: validation.caption_coco_format.json
+caption_linelist: validation.caption.linelist.tsv
+img: validation.img.tsv
+label: validation.label.tsv
