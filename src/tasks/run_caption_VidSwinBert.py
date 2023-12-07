@@ -35,6 +35,8 @@ from src.modeling.load_swin import get_swin_model, reload_pretrained_swin
 from src.modeling.load_bert import get_bert_model
 from src.solver import AdamW, WarmupLinearLR
 
+import wandb
+
 from azureml.core.run import Run
 aml_run = Run.get_context()
 
@@ -198,6 +200,10 @@ def train(args, train_dataloader, val_dataloader, model, tokenizer, training_sav
                 scaled_loss.backward()
         if backward_now:
             global_step += 1
+
+            if is_main_process():
+                wandb.log({"loss": loss.item(), "accuracy": batch_acc.item(), "step": global_step})
+
             TB_LOGGER.add_scalar('train/loss', running_loss.val, global_step)
 
             lr_VisBone = optimizer.param_groups[0]["lr"]
@@ -263,7 +269,6 @@ def train(args, train_dataloader, val_dataloader, model, tokenizer, training_sav
 
             if (args.save_steps > 0 and global_step % args.save_steps == 0) or global_step == max_global_step or global_step == 1:
                 epoch = global_step // global_iters_per_epoch
-                
                 checkpoint_dir = op.join(args.output_dir, 'checkpoint-{}-{}'.format(
                     epoch, global_step))
                 if get_world_size() > 1:
@@ -434,7 +439,7 @@ def test(args, test_dataloader, model, tokenizer, predict_file):
                         img_key = img_key.item()
                     yield img_key, json.dumps(res)
 
-        logger.info(f"Inference model computing time: {(time_meter / (step+1))} seconds per batch")
+        #logger.info(f"Inference model computing time: {(time_meter / (step+1))} seconds per batch")
 
     tsv_writer(gen_rows(), cache_file)
     if world_size > 1:
@@ -653,6 +658,10 @@ def main(args):
     vl_transformer.to(args.device)
     
     if args.do_train:
+
+        if is_main_process():
+            wandb.init(project="SwinBERT", name="training_process", config=args)
+
         args = restore_training_settings(args)
         train_dataloader = make_data_loader(args, args.train_yaml, tokenizer, args.distributed, is_train=True)
         val_dataloader = make_data_loader(args, args.val_yaml, tokenizer, args.distributed, is_train=False)
@@ -676,4 +685,5 @@ def main(args):
 if __name__ == "__main__":
     shared_configs.shared_video_captioning_config(cbs=True, scst=True)
     args = get_custom_args(shared_configs)
+    torch.cuda.set_device(args.local_rank)
     main(args)
