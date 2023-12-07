@@ -1,4 +1,0 @@
-img: frame_tsv/testing_128frames_img_size256.img.tsv
-label: testing.label.tsv
-caption: testing.caption.tsv
-caption_linelist: testing.caption.linelist.tsv
